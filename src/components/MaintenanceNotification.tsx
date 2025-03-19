@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 import axios from "axios";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 export default function MaintenanceNotification() {
   const pathname = usePathname();
@@ -62,7 +62,7 @@ export default function MaintenanceNotification() {
       timeMessage += `${mins} minute${mins !== 1 ? "s" : ""}`;
     }
 
-    toast(
+    toast.error(
       (t) => (
         <div className="flex items-start">
           <div className="ml-3">
@@ -90,5 +90,5 @@ export default function MaintenanceNotification() {
   };
 
   // This component doesn't render anything visible
-  return null;
+  return <></>;
 }
