@@ -6,34 +6,26 @@ import axios from "axios";
 import { usePathname } from "next/navigation";
 
 export default function MaintenanceNotification() {
-  const [maintenanceTime, setMaintenanceTime] = useState<string | null>(null);
-  const [countdownMinutes, setCountdownMinutes] = useState<number | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
     // Function to check maintenance status
     const checkMaintenanceStatus = async () => {
       try {
-        const url =
-          process.env.NEXT_PUBLIC_API_BASE_URL! +
-          process.env.NEXT_PUBLIC_API_BASE_URL_SETTINGS!;
+        const url = process.env.NEXT_PUBLIC_API_BASE_URL_WARNINGS_FOR_BUSINESS!;
         const response = await axios.get(url);
         const {
-          isMaintenanceMode,
-          maintenanceScheduledTime,
-          maintenanceCountdownMinutes,
+          isWarning,
+          scheduledMaintenanceTime,
         } = response.data;
 
-        if (isMaintenanceMode && maintenanceScheduledTime) {
-          setMaintenanceTime(maintenanceScheduledTime);
+        if (isWarning) {
 
           // Calculate remaining minutes
           const now = new Date();
-          const scheduled = new Date(maintenanceScheduledTime);
+          const scheduled = new Date(scheduledMaintenanceTime);
           const diffMs = scheduled.getTime() - now.getTime();
           const diffMinutes = Math.floor(diffMs / (1000 * 60));
-
-          setCountdownMinutes(diffMinutes > 0 ? diffMinutes : 0);
 
           // Show toast notification for partner routes
           // Since this component is only included in the partner layout,
@@ -41,9 +33,6 @@ export default function MaintenanceNotification() {
           if (diffMinutes > 0) {
             showMaintenanceToast(diffMinutes);
           }
-        } else {
-          setMaintenanceTime(null);
-          setCountdownMinutes(null);
         }
       } catch (error) {
         console.error("Failed to check maintenance status:", error);
