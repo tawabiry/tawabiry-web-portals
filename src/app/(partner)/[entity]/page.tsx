@@ -1,7 +1,7 @@
 "use client";
 
 import { QueueModalProps } from "../../../../types";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setEntity } from "@/store/features/entitySlice";
 import { RootState } from "@/store/store";
@@ -9,6 +9,8 @@ import { useEffect, useState, useRef } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { useLocation } from "@/ctx/LocationContext";
 import MaintenanceNotification from "@/components/MaintenanceNotification";
+import { useBusinessAuth } from "@/lib/auth/AuthContext";
+import LoadingScreen from "@/app/components/LoadingScreen";
 
 export default function Entity({ children }: QueueModalProps) {
   const pathname = usePathname();
@@ -18,7 +20,10 @@ export default function Entity({ children }: QueueModalProps) {
   const entityName = useSelector((state: RootState) => state.entity.name);
   const [isOpen, setIsOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { business } = useBusinessAuth();
   const { selectedLocation, locations, setSelectedLocation } = useLocation();
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   const formatPageName = (name: string) => {
     const formattedName = name.replace(/[^\w\s]/gi, " ");
@@ -32,6 +37,11 @@ export default function Entity({ children }: QueueModalProps) {
     if (typeof entity === "string") {
       const formattedEntity = formatPageName(entity);
       dispatch(setEntity({ name: formattedEntity, id: null, type: null }));
+      setLoading(false);
+    }
+
+    if (!business?.name || !business.email) {
+        return router.push("/login");
     }
   }, [entity, dispatch]);
 
@@ -46,6 +56,7 @@ export default function Entity({ children }: QueueModalProps) {
   }
 
   return (
+      loading ? <LoadingScreen /> :
       <>
         <MaintenanceNotification />
         <div className="space-y-6">
