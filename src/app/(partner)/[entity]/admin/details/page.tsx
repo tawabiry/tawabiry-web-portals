@@ -126,7 +126,7 @@ function DetailsPage() {
         if (response.status === 200) {
           return response.data.info;
         } else {
-          throw new Error("Failed to fetch business data");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {

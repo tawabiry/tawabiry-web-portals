@@ -77,7 +77,7 @@ export default function CategoriesPage() {
         if (response.status === 201) {
           return response.data.category;
         } else {
-          throw new Error("Failed to create category");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
@@ -167,7 +167,7 @@ export default function CategoriesPage() {
         .delete(url, { data: { id: categoryId, name: categoryToDelete.name } })
         .then((response) => {
           if (response.status !== 204) {
-            throw new Error("Failed to delete category");
+            throw new Error(response.data.message);
           }
         })
         .catch(() => {

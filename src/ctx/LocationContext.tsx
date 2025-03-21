@@ -40,7 +40,7 @@ export function LocationProvider({ children }: { children: React.ReactNode }) {
             if (response.status === 200) { 
                 return response.data.locations;
             } else{ 
-                throw new Error("Failed to fetch locations");
+                throw new Error(response.data.message);
             }
         })
         .then((data) => {
