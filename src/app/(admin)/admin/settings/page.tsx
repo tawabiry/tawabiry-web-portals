@@ -204,7 +204,7 @@ export default function SettingsPage() {
 
               return response.data;
             } else {
-              throw new Error("Failed to update maintenance mode");
+              throw new Error(response.data.message);
             }
           })
           .catch((error) => {
@@ -246,7 +246,7 @@ export default function SettingsPage() {
 
               return response.data;
             } else {
-              throw new Error("Failed to update coming soon mode");
+              throw new Error(response.data.message);
             }
           })
           .catch((error) => {
@@ -332,7 +332,7 @@ export default function SettingsPage() {
           setIsDurationChanged(false);
           toast.success("Maintenance duration updated successfully!");
         } else {
-          throw new Error("Failed to update maintenance duration");
+          throw new Error(response.data.message);
         }
       })
       .catch((error) => {

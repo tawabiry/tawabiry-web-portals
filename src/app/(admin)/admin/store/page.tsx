@@ -111,7 +111,7 @@ export default function StorePage() {
         if (response.status === 200) {
           return response.data.stores.content;
         } else {
-          throw new Error("Failed to fetch stores data");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
@@ -148,7 +148,7 @@ export default function StorePage() {
         if (response.status === 200) {
           return response.data.stores;
         } else {
-          throw new Error("Failed to fetch pending requests data");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
@@ -202,7 +202,7 @@ export default function StorePage() {
           if (response.status === 200) {
             return response.data.store;
           } else {
-            throw new Error("Failed to approve store request");
+            throw new Error(response.data.message);
           }
         })
         .then((data) => {

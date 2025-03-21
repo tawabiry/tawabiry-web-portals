@@ -73,7 +73,7 @@ export default function PartnersPage() {
       if (response.status === 201) {
         return response.data.partner;
       } else { 
-        throw new Error("Failed to add partner");
+        throw new Error(response.data.message);
       }
     })
     .then((data) => {
@@ -119,7 +119,7 @@ export default function PartnersPage() {
         if (response.status === 201) {
           return response.data.location;
         } else {
-          throw new Error("Failed to add location");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {

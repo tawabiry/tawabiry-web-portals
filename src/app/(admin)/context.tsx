@@ -40,7 +40,7 @@ export const PartnersProvider = ({
                 if (response.status === 200) {
                     return response.data.partners.content;
                 } else {
-                    throw new Error("Error fetching partners");
+                    throw new Error(response.data.message);
                 }
             })
             .then((data) => {
@@ -120,7 +120,7 @@ export const CategoriesProvider = ({
                 if (response.status === 200) {
                     return response.data.categories.content;
                 } else {
-                    throw new Error("Failed to fetch categories");
+                    throw new Error(response.data.message);
                 }
             })
             .then((data) => {
@@ -198,7 +198,7 @@ export const NotificationsProvider = ({
                 if (response.status === 200) {
                     return response.data.notifications.content;
                 } else {
-                    throw new Error("Failed to fetch notifications");
+                    throw new Error(response.data.message);
                 }
             })
             .then((data) => {

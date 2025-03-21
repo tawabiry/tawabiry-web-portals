@@ -477,7 +477,7 @@ const StoreSetupView = ({ onComplete }: { onComplete: () => void }) => {
           if (response.status === 201) {
             return response.data;
           } else {
-            throw new Error("Failed to complete store setup");
+            throw new Error(response.data.message);
           }
         })
         .then(async (data) => {
@@ -1283,7 +1283,7 @@ const StoreDashboardView = () => {
         if (response.status === 200) {
           return;
         } else {
-          throw new Error("Failed to delete product");
+          throw new Error(response.data.message);
         }
       })
       .then(() => {
@@ -1310,7 +1310,7 @@ const StoreDashboardView = () => {
         if (response.status === 201) {
           return response.data.product;
         } else {
-          throw new Error("Failed to add product");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
@@ -1359,7 +1359,7 @@ const StoreDashboardView = () => {
         if (response.status === 200) {
           return response.data.products.content;
         } else {
-          throw new Error("Failed to fetch product data");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
@@ -1853,7 +1853,7 @@ function StorePage() {
         if (response.status === 201) {
           return response.data;
         } else {
-          throw new Error("Failed to submit documents");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
@@ -1908,7 +1908,7 @@ function StorePage() {
         if (response.status === 200) {
           return response.data.status;
         } else {
-          throw new Error("Failed to fetch store status");
+          throw new Error(response.data.message);
         }
       })
       .then((data) => {
